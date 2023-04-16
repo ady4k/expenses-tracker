@@ -22,8 +22,11 @@ class MainMenuController: UIViewController {
         setupButtons()
         setupExpenses()
         setupIncome()
+        setupNavButtons()
         view.backgroundColor = .systemBackground
         title = "Home"
+        
+        
     }
 
     func setupButtons() {
@@ -129,6 +132,39 @@ class MainMenuController: UIViewController {
     
     func setupTrends() {
         
+    }
+    
+    func setupNavButtons() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit",
+                                                           style: .done,
+                                                           target: self,
+                                                           action: #selector(MainMenuController.leftBarButtonItemTapped))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"),
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(MainMenuController.rightBarButtonItemTapped))
+    }
+    
+    @objc func leftBarButtonItemTapped() {
+        let alertController = UIAlertController(title: "Are you sure you want to exit?",
+                                                message: "",
+                                                preferredStyle: .alert)
+        let noAction = UIAlertAction(title: "No", style: .destructive)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
+            exit(0)
+        }
+        
+        alertController.addAction(noAction)
+        alertController.addAction(yesAction)
+        alertController.preferredAction = yesAction
+        present(alertController, animated: true)
+    }
+    
+    @objc func rightBarButtonItemTapped() {
+        let settingsController = SettingsController()
+        settingsController.title = "Settings"
+        navigationController?.pushViewController(settingsController, animated: true)
     }
     
     @objc func goToRemainingBudgetScreen() {
