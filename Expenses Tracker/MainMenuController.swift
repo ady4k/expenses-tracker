@@ -12,10 +12,11 @@ class MainMenuController: UIViewController {
     let remainingBudget = UIButton()
     let expenses = UIButton()
     let income = UIButton()
-    let trends = UILabel()
-    let lastTransactions = UIButton()
     
+    let trends = UIButton()
     
+    let lastTransactions = UILabel()
+    let transactionsTable = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +24,12 @@ class MainMenuController: UIViewController {
         setupExpenses()
         setupIncome()
         setupNavButtons()
+        setupTrends()
+        setupLastTransactions()
         view.backgroundColor = .systemBackground
         title = "Home"
         
-        
+    
     }
 
     func setupButtons() {
@@ -41,7 +44,7 @@ class MainMenuController: UIViewController {
         
         remainingBudget.layer.cornerRadius = 25.0
         remainingBudget.backgroundColor = .systemMint
-        remainingBudget.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
+        remainingBudget.layer.borderColor = UIColor.black.cgColor
         remainingBudget.layer.borderWidth = 1.5
         
         NSLayoutConstraint.activate([
@@ -66,7 +69,7 @@ class MainMenuController: UIViewController {
         }
         
         let menu = UIMenu(title: "Expenses Options", options: .displayInline, children: [viewExpenses, addExpense, hideExpenses])
-        
+        // TODO: de implementat functionalitati pentru butoane
         expenses.menu = menu
         expenses.showsMenuAsPrimaryAction = true
         
@@ -77,7 +80,7 @@ class MainMenuController: UIViewController {
         expenses.contentHorizontalAlignment = .center
         
         expenses.layer.cornerRadius = 25.0
-        expenses.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
+        expenses.layer.borderColor = UIColor.black.cgColor
         expenses.layer.borderWidth = 1.5
         
         expenses.backgroundColor = .systemOrange
@@ -105,7 +108,7 @@ class MainMenuController: UIViewController {
         }
         
         let menu = UIMenu(title: "Income Options", options: .displayInline, children: [viewIncome, addIncome, hideIncome])
-        
+        // TODO: de implementat functionalitati pentru butoane
         income.menu = menu
         income.showsMenuAsPrimaryAction = true
         
@@ -116,7 +119,7 @@ class MainMenuController: UIViewController {
         income.contentHorizontalAlignment = .center
         
         income.layer.cornerRadius = 25.0
-        income.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
+        income.layer.borderColor = UIColor.black.cgColor
         income.layer.borderWidth = 1.5
         
         income.backgroundColor = .systemPink
@@ -131,6 +134,49 @@ class MainMenuController: UIViewController {
     }
     
     func setupTrends() {
+        view.addSubview(trends)
+        
+        trends.setTitle("Your expenses have grown up 87% since last week.", for: .normal)
+        trends.titleLabel?.numberOfLines = 2
+        trends.configuration?.titleLineBreakMode = .byTruncatingTail
+        trends.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
+        trends.titleLabel?.minimumScaleFactor = 0.5
+        
+        trends.layer.cornerRadius = 25.0
+        trends.layer.borderColor = UIColor.black.cgColor
+        trends.layer.borderWidth = 1.5
+        // TODO: de facut scaling automat in functie de cate trend-uri noi sunt
+        
+        
+        trends.backgroundColor = UIColor(red: 0.86, green: 0.68, blue: 0.42, alpha: 1.0)
+        trends.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            trends.topAnchor.constraint(equalTo: income.bottomAnchor, constant: 10.0),
+            trends.widthAnchor.constraint(equalTo: remainingBudget.widthAnchor),
+            trends.heightAnchor.constraint(equalTo: remainingBudget.heightAnchor),
+            trends.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
+    }
+    
+    func setupLastTransactions() {
+        view.addSubview(lastTransactions)
+        
+        lastTransactions.text = "Last 5 transactions:"
+        lastTransactions.font = UIFont.boldSystemFont(ofSize: 20.0)
+        lastTransactions.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            lastTransactions.topAnchor.constraint(equalTo: trends.bottomAnchor, constant: 20.0),
+            lastTransactions.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.90),
+            lastTransactions.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0)
+        ])
+        
+        view.addSubview(transactionsTable)
+        transactionsTable.delegate = self
+        transactionsTable.dataSource = self
+        transactionsTable.rowHeight = 80
+        transactionsTable.translatesAutoresizingMaskIntoConstraints = false
         
     }
     
@@ -174,3 +220,24 @@ class MainMenuController: UIViewController {
     }
 }
 
+extension MainMenuController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // TODO: de implementat celulele tabelului bazate pe tranzactii
+        // TODO: de implementat ViewController pentru celule
+        if let transactionCell = transactionsTable.dequeueReusableCell(withIdentifier: TransactionViewCell.transactionIdentifier, for: indexPath) as? TransactionViewCell {
+            
+            return transactionCell
+        } else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5;
+    }
+    // TODO: de implementat
+}
+
+extension MainMenuController : UITableViewDelegate {
+    // TODO: de implementat
+}
