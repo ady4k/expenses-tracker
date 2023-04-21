@@ -20,7 +20,7 @@ class MainMenuController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupButtons()
+        setupBudget()
         setupExpenses()
         setupIncome()
         setupNavButtons()
@@ -28,15 +28,13 @@ class MainMenuController: UIViewController {
         setupLastTransactions()
         view.backgroundColor = .systemBackground
         title = "Home"
-        
-    
     }
     
     override func viewWillAppear(_ animated: Bool) {
         transactionsTable.reloadData()
     }
 
-    func setupButtons() {
+    func setupBudget() {
         view.addSubview(remainingBudget)
         remainingBudget.addTarget(self, action: #selector(goToRemainingBudgetScreen), for: .touchUpInside)
         
@@ -233,6 +231,7 @@ class MainMenuController: UIViewController {
         nextScreen.title = "Add Invoice"
         navigationController?.pushViewController(nextScreen, animated: true)
     }
+
 }
 
 extension MainMenuController : UITableViewDataSource {
@@ -240,8 +239,10 @@ extension MainMenuController : UITableViewDataSource {
         // TODO: de implementat celulele tabelului bazate pe tranzactii
         // TODO: de implementat ViewController pentru celule
         if let transactionCell = transactionsTable.dequeueReusableCell(withIdentifier: TransactionViewCell.transactionIdentifier, for: indexPath) as? TransactionViewCell {
-            transactionCell.self.layer.borderWidth = 2
-            transactionCell.self.layer.borderColor = UIColor.red.cgColor
+            #if DEBUG
+                transactionCell.self.layer.borderWidth = 2
+                transactionCell.self.layer.borderColor = UIColor.red.cgColor
+            #endif
             
             return transactionCell
         } else {

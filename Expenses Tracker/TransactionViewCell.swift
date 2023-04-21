@@ -10,7 +10,7 @@ import UIKit
 class TransactionViewCell: UITableViewCell {
     static let transactionIdentifier = "identifier"
     var isNegative: Bool = true
-    var cashAmount: Double = 12345678.55
+    var cashAmount: Double = 12345678.90
     var currencyCode: String = "EUR"
     
     let cellTitleLabel = UILabel()
@@ -23,6 +23,10 @@ class TransactionViewCell: UITableViewCell {
         setupCellTitle()
         setupCellType()
         setupCellAmount(isNegative, cashAmount)
+    
+        #if DEBUG
+            setupDevBorders()
+        #endif
     }
     
     func setupCellTitle() {
@@ -30,8 +34,6 @@ class TransactionViewCell: UITableViewCell {
         cellTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         cellTitleLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         cellTitleLabel.text = "Transaction Title"
-        cellTitleLabel.layer.borderWidth = 2
-        cellTitleLabel.layer.borderColor = UIColor.green.cgColor
         
         NSLayoutConstraint.activate([
             cellTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0),
@@ -46,8 +48,6 @@ class TransactionViewCell: UITableViewCell {
         cellTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         cellTypeLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         cellTypeLabel.text = "Expense"
-        cellTypeLabel.layer.borderWidth = 2
-        cellTypeLabel.layer.borderColor = UIColor.blue.cgColor
         
         NSLayoutConstraint.activate([
             cellTypeLabel.leadingAnchor.constraint(equalTo: cellTitleLabel.trailingAnchor, constant: 5.0),
@@ -61,8 +61,6 @@ class TransactionViewCell: UITableViewCell {
         cellAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         cellAmountLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         cellAmountLabel.textAlignment = .right
-        cellAmountLabel.layer.borderWidth = 2
-        cellAmountLabel.layer.borderColor = UIColor.black.cgColor
         
         let sign: String
         if (negativeAmount == false) {
@@ -91,5 +89,17 @@ class TransactionViewCell: UITableViewCell {
     
     deinit {
         // TODO: deinit
+    }
+    
+    
+    func setupDevBorders() {
+        cellAmountLabel.layer.borderWidth = 2
+        cellAmountLabel.layer.borderColor = UIColor.black.cgColor
+        
+        cellTypeLabel.layer.borderWidth = 2
+        cellTypeLabel.layer.borderColor = UIColor.blue.cgColor
+        
+        cellTitleLabel.layer.borderWidth = 2
+        cellTitleLabel.layer.borderColor = UIColor.green.cgColor
     }
 }
