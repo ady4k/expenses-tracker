@@ -20,6 +20,7 @@
 		AF82682329E9A1DD000A5C34 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF82682229E9A1DD000A5C34 /* MainMenuController.swift */; };
 		AF82682829E9A1DD000A5C34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF82682729E9A1DD000A5C34 /* Assets.xcassets */; };
 		AF82682B29E9A1DD000A5C34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF82682929E9A1DD000A5C34 /* LaunchScreen.storyboard */; };
+		AFBE2ACE29F303AB00CF4C63 /* TransactionDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBE2ACD29F303AB00CF4C63 /* TransactionDetailsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		AF82682729E9A1DD000A5C34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF82682A29E9A1DD000A5C34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF82682C29E9A1DD000A5C34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFBE2ACD29F303AB00CF4C63 /* TransactionDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				AF4FF9D029EC4D3D00B9B85C /* UserController.swift */,
 				AF4FF9D229EC51BB00B9B85C /* SettingsController.swift */,
 				AF4FF9D429EC5C0500B9B85C /* TransactionViewCell.swift */,
+				AFBE2ACD29F303AB00CF4C63 /* TransactionDetailsController.swift */,
 			);
 			path = "Expenses Tracker";
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 				AF4FF9D329EC51BB00B9B85C /* SettingsController.swift in Sources */,
 				AF4FF9C929EC455700B9B85C /* TabBarController.swift in Sources */,
 				AF4FF9C529EC018F00B9B85C /* AddInvoiceController.swift in Sources */,
+				AFBE2ACE29F303AB00CF4C63 /* TransactionDetailsController.swift in Sources */,
 				AF4FF9CB29EC4BFB00B9B85C /* TransactionHistoryController.swift in Sources */,
 				AF4FF9D529EC5C0500B9B85C /* TransactionViewCell.swift in Sources */,
 			);

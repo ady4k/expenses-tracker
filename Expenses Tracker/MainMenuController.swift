@@ -31,6 +31,10 @@ class MainMenuController: UIViewController {
         
     
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        transactionsTable.reloadData()
+    }
 
     func setupButtons() {
         view.addSubview(remainingBudget)
@@ -172,12 +176,23 @@ class MainMenuController: UIViewController {
             lastTransactions.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0)
         ])
         
+        setupTransactionsTable()
+    }
+    
+    func setupTransactionsTable() {
         view.addSubview(transactionsTable)
         transactionsTable.delegate = self
         transactionsTable.dataSource = self
-        transactionsTable.rowHeight = 80
+        transactionsTable.rowHeight = 50
         transactionsTable.translatesAutoresizingMaskIntoConstraints = false
+        transactionsTable.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.transactionIdentifier)
         
+        NSLayoutConstraint.activate([
+            transactionsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
+            transactionsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
+            transactionsTable.topAnchor.constraint(equalTo: lastTransactions.bottomAnchor, constant: 20.0),
+            transactionsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
     
     func setupNavButtons() {
@@ -225,6 +240,8 @@ extension MainMenuController : UITableViewDataSource {
         // TODO: de implementat celulele tabelului bazate pe tranzactii
         // TODO: de implementat ViewController pentru celule
         if let transactionCell = transactionsTable.dequeueReusableCell(withIdentifier: TransactionViewCell.transactionIdentifier, for: indexPath) as? TransactionViewCell {
+            transactionCell.self.layer.borderWidth = 2
+            transactionCell.self.layer.borderColor = UIColor.red.cgColor
             
             return transactionCell
         } else {
@@ -233,11 +250,14 @@ extension MainMenuController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5;
+        return 15;
     }
     // TODO: de implementat
 }
 
 extension MainMenuController : UITableViewDelegate {
-    // TODO: de implementat
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let transactionDetailsViewController = TransactionDetailsController()
+        navigationController?.pushViewController(transactionDetailsViewController, animated: true)
+    }
 }
