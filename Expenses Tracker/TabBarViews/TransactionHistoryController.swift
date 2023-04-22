@@ -11,6 +11,7 @@ class TransactionHistoryController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Transactions History"
         view.backgroundColor = .systemIndigo
     }
 }

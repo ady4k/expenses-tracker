@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF4FF9C529EC018F00B9B85C /* AddInvoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4FF9C429EC018F00B9B85C /* AddInvoiceController.swift */; };
 		AF4FF9C929EC455700B9B85C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4FF9C829EC455700B9B85C /* TabBarController.swift */; };
 		AF4FF9CB29EC4BFB00B9B85C /* TransactionHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4FF9CA29EC4BFB00B9B85C /* TransactionHistoryController.swift */; };
 		AF4FF9CD29EC4C6000B9B85C /* InvoiceAddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4FF9CC29EC4C6000B9B85C /* InvoiceAddController.swift */; };
@@ -20,12 +19,12 @@
 		AF82682329E9A1DD000A5C34 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF82682229E9A1DD000A5C34 /* MainMenuController.swift */; };
 		AF82682829E9A1DD000A5C34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF82682729E9A1DD000A5C34 /* Assets.xcassets */; };
 		AF82682B29E9A1DD000A5C34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF82682929E9A1DD000A5C34 /* LaunchScreen.storyboard */; };
-		AFA8FEEE29F3468E006D6D48 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA8FEED29F3468E006D6D48 /* Transaction.swift */; };
+		AFA8FEEE29F3468E006D6D48 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA8FEED29F3468E006D6D48 /* TransactionModel.swift */; };
 		AFBE2ACE29F303AB00CF4C63 /* TransactionDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBE2ACD29F303AB00CF4C63 /* TransactionDetailsController.swift */; };
+		AFC730C429F3EE1A0097E0BC /* TransactionsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC730C329F3EE1A0097E0BC /* TransactionsTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AF4FF9C429EC018F00B9B85C /* AddInvoiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceController.swift; sourceTree = "<group>"; };
 		AF4FF9C829EC455700B9B85C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		AF4FF9CA29EC4BFB00B9B85C /* TransactionHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryController.swift; sourceTree = "<group>"; };
 		AF4FF9CC29EC4C6000B9B85C /* InvoiceAddController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceAddController.swift; sourceTree = "<group>"; };
@@ -40,8 +39,9 @@
 		AF82682729E9A1DD000A5C34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF82682A29E9A1DD000A5C34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF82682C29E9A1DD000A5C34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AFA8FEED29F3468E006D6D48 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		AFA8FEED29F3468E006D6D48 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		AFBE2ACD29F303AB00CF4C63 /* TransactionDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsController.swift; sourceTree = "<group>"; };
+		AFC730C329F3EE1A0097E0BC /* TransactionsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,22 +76,38 @@
 			children = (
 				AF82681E29E9A1DD000A5C34 /* AppDelegate.swift */,
 				AF82682029E9A1DD000A5C34 /* SceneDelegate.swift */,
-				AF82682229E9A1DD000A5C34 /* MainMenuController.swift */,
 				AF82682729E9A1DD000A5C34 /* Assets.xcassets */,
 				AF82682929E9A1DD000A5C34 /* LaunchScreen.storyboard */,
 				AF82682C29E9A1DD000A5C34 /* Info.plist */,
-				AF4FF9C429EC018F00B9B85C /* AddInvoiceController.swift */,
+				AF82682229E9A1DD000A5C34 /* MainMenuController.swift */,
+				AF4FF9D229EC51BB00B9B85C /* SettingsController.swift */,
+				AFC730BE29F3CA2E0097E0BC /* TabBarViews */,
+				AFC730BC29F3C9E90097E0BC /* Transaction */,
+			);
+			path = "Expenses Tracker";
+			sourceTree = "<group>";
+		};
+		AFC730BC29F3C9E90097E0BC /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				AFA8FEED29F3468E006D6D48 /* TransactionModel.swift */,
+				AF4FF9D429EC5C0500B9B85C /* TransactionViewCell.swift */,
+				AFBE2ACD29F303AB00CF4C63 /* TransactionDetailsController.swift */,
+				AFC730C329F3EE1A0097E0BC /* TransactionsTableView.swift */,
+			);
+			path = Transaction;
+			sourceTree = "<group>";
+		};
+		AFC730BE29F3CA2E0097E0BC /* TabBarViews */ = {
+			isa = PBXGroup;
+			children = (
 				AF4FF9C829EC455700B9B85C /* TabBarController.swift */,
 				AF4FF9CA29EC4BFB00B9B85C /* TransactionHistoryController.swift */,
 				AF4FF9CC29EC4C6000B9B85C /* InvoiceAddController.swift */,
 				AF4FF9CE29EC4D3200B9B85C /* TemplateController.swift */,
 				AF4FF9D029EC4D3D00B9B85C /* UserController.swift */,
-				AF4FF9D229EC51BB00B9B85C /* SettingsController.swift */,
-				AF4FF9D429EC5C0500B9B85C /* TransactionViewCell.swift */,
-				AFBE2ACD29F303AB00CF4C63 /* TransactionDetailsController.swift */,
-				AFA8FEED29F3468E006D6D48 /* Transaction.swift */,
 			);
-			path = "Expenses Tracker";
+			path = TabBarViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,11 +185,11 @@
 				AF82681F29E9A1DD000A5C34 /* AppDelegate.swift in Sources */,
 				AF4FF9CD29EC4C6000B9B85C /* InvoiceAddController.swift in Sources */,
 				AF4FF9CF29EC4D3200B9B85C /* TemplateController.swift in Sources */,
-				AFA8FEEE29F3468E006D6D48 /* Transaction.swift in Sources */,
+				AFC730C429F3EE1A0097E0BC /* TransactionsTableView.swift in Sources */,
+				AFA8FEEE29F3468E006D6D48 /* TransactionModel.swift in Sources */,
 				AF82682129E9A1DD000A5C34 /* SceneDelegate.swift in Sources */,
 				AF4FF9D329EC51BB00B9B85C /* SettingsController.swift in Sources */,
 				AF4FF9C929EC455700B9B85C /* TabBarController.swift in Sources */,
-				AF4FF9C529EC018F00B9B85C /* AddInvoiceController.swift in Sources */,
 				AFBE2ACE29F303AB00CF4C63 /* TransactionDetailsController.swift in Sources */,
 				AF4FF9CB29EC4BFB00B9B85C /* TransactionHistoryController.swift in Sources */,
 				AF4FF9D529EC5C0500B9B85C /* TransactionViewCell.swift in Sources */,
@@ -322,7 +338,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -353,7 +369,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

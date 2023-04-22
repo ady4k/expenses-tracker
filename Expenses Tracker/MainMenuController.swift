@@ -8,58 +8,100 @@
 import UIKit
 
 class MainMenuController: UIViewController {
-
+    let scrollView = UIScrollView()
+    let stackView = UIStackView()
+    
     let remainingBudget = UIButton()
+    var hiddenLabels = false
+    
     let expenses = UIButton()
     let income = UIButton()
-    
     let trends = UIButton()
     
     let lastTransactions = UILabel()
-    let transactionsTable = UITableView()
+    let transactionsTable = TransactionsTableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        transactionsTable.rowsToReturn = 5;
+
+        setupScrollingScreen()
+        setupElementStyling()
+
+        view.backgroundColor = .systemBackground
+        title = "Home"
+        
+        #if DEBUG
+        setupDevBorders()
+        #endif
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        transactionsTable.reloadData()
+    }
+    
+    func setupScrollingScreen() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
+        
+        stackView.axis = .vertical
+        addGeneralConstraints(for: scrollView, to: view)
+        addGeneralConstraints(for: stackView, to: scrollView, additionalConstraints: [
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            stackView.heightAnchor.constraint(equalToConstant: 380 + CGFloat(transactionsTable.numberOfRows(inSection: 0)) * transactionsTable.rowHeight)
+        ])
+        
+        setupElementsOnScroll()
+    }
+    
+    func addGeneralConstraints(for subview: UIView, to superview: UIView, additionalConstraints: [NSLayoutConstraint] = []) {
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            subview.topAnchor.constraint(equalTo: superview.topAnchor),
+            subview.leadingAnchor.constraint(equalTo: superview.leadingAnchor),
+            subview.trailingAnchor.constraint(equalTo: superview.trailingAnchor),
+            subview.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+        ])
+        NSLayoutConstraint.activate(additionalConstraints)
+    }
+    
+    func setupElementsOnScroll() {
+        stackView.addSubview(remainingBudget)
+        stackView.addSubview(expenses)
+        stackView.addSubview(income)
+        stackView.addSubview(trends)
+        stackView.addSubview(lastTransactions)
+        stackView.addSubview(transactionsTable)
+    }
+    
+    func setupElementStyling() {
         setupBudget()
         setupExpenses()
         setupIncome()
         setupNavButtons()
         setupTrends()
         setupLastTransactions()
-        view.backgroundColor = .systemBackground
-        title = "Home"
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        transactionsTable.reloadData()
     }
 
     func setupBudget() {
-        view.addSubview(remainingBudget)
-        remainingBudget.addTarget(self, action: #selector(goToRemainingBudgetScreen), for: .touchUpInside)
+        remainingBudget.addTarget(self, action: #selector(toggleLabels), for: .touchUpInside)
         
         remainingBudget.translatesAutoresizingMaskIntoConstraints = false
-        remainingBudget.setTitleColor(.black, for: .normal)
-        remainingBudget.setTitle("Budget: ...$", for: .normal)
-        remainingBudget.titleLabel?.font = .systemFont(ofSize: 32.0, weight: .bold)
+        remainingBudget.setTitleColor(UIColor.label, for: .normal)
+        remainingBudget.setTitle("Budget: €12,345,678.90", for: .normal)
+        remainingBudget.titleLabel?.font = .systemFont(ofSize: 28.0, weight: .bold)
         remainingBudget.contentVerticalAlignment = .top
-        
-        remainingBudget.layer.cornerRadius = 25.0
-        remainingBudget.backgroundColor = .systemMint
-        remainingBudget.layer.borderColor = UIColor.black.cgColor
-        remainingBudget.layer.borderWidth = 1.5
+        remainingBudget.contentHorizontalAlignment = .left
         
         NSLayoutConstraint.activate([
+            remainingBudget.topAnchor.constraint(equalTo: stackView.topAnchor),
             remainingBudget.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            remainingBudget.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            remainingBudget.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -25.0),
-            remainingBudget.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.15)
+            remainingBudget.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.9),
+            remainingBudget.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
     func setupExpenses() {
-        view.addSubview(expenses)
-        
         let viewExpenses = UIAction(title: "View Expenses", image: UIImage(systemName: "list.bullet")) { (action) in
             // go to expenses menu controller
         }
@@ -75,30 +117,23 @@ class MainMenuController: UIViewController {
         expenses.menu = menu
         expenses.showsMenuAsPrimaryAction = true
         
-        expenses.setTitle("Expenses:\n...$", for: .normal)
-        expenses.titleLabel?.numberOfLines = 2
-        expenses.setTitleColor(.black, for: .normal)
-        expenses.titleLabel?.font = .systemFont(ofSize: 24.0)
-        expenses.contentHorizontalAlignment = .center
+        expenses.setTitle("• Expenses: €12,345,678.90", for: .normal)
+        expenses.setTitleColor(UIColor.label, for: .normal)
+        expenses.titleLabel?.font = .systemFont(ofSize: 20.0)
+        expenses.contentHorizontalAlignment = .left
+        expenses.contentVerticalAlignment = .top
         
-        expenses.layer.cornerRadius = 25.0
-        expenses.layer.borderColor = UIColor.black.cgColor
-        expenses.layer.borderWidth = 1.5
-        
-        expenses.backgroundColor = .systemOrange
         expenses.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            expenses.topAnchor.constraint(equalTo: remainingBudget.bottomAnchor, constant: -40.0),
+            expenses.topAnchor.constraint(equalTo: remainingBudget.bottomAnchor, constant: -10),
             expenses.leftAnchor.constraint(equalTo: remainingBudget.leftAnchor, constant: 25.0),
-            expenses.widthAnchor.constraint(equalTo: remainingBudget.widthAnchor, multiplier: 0.40),
-            expenses.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.10),
+            expenses.widthAnchor.constraint(equalTo: remainingBudget.widthAnchor, multiplier: 0.90),
+            expenses.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
     
     func setupIncome() {
-        view.addSubview(income)
-        
         let viewIncome = UIAction(title: "View Income", image: UIImage(systemName: "list.bullet")) { (action) in
             // go to expenses menu controller
         }
@@ -114,83 +149,71 @@ class MainMenuController: UIViewController {
         income.menu = menu
         income.showsMenuAsPrimaryAction = true
         
-        income.setTitle("Income:\n...$", for: .normal)
-        income.titleLabel?.numberOfLines = 2
-        income.setTitleColor(.black, for: .normal)
-        income.titleLabel?.font = .systemFont(ofSize: 24.0)
-        income.contentHorizontalAlignment = .center
+        income.setTitle("• Income: €12,345,678.90", for: .normal)
+        income.setTitleColor(UIColor.label, for: .normal)
+        income.titleLabel?.font = .systemFont(ofSize: 20.0)
+        income.contentHorizontalAlignment = .left
+        income.contentVerticalAlignment = .top
         
-        income.layer.cornerRadius = 25.0
-        income.layer.borderColor = UIColor.black.cgColor
-        income.layer.borderWidth = 1.5
         
-        income.backgroundColor = .systemPink
         income.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            income.topAnchor.constraint(equalTo: remainingBudget.bottomAnchor, constant: -40.0),
-            income.rightAnchor.constraint(equalTo: remainingBudget.rightAnchor, constant: -25.0),
-            income.widthAnchor.constraint(equalTo: remainingBudget.widthAnchor, multiplier: 0.40),
-            income.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.10),
+            income.topAnchor.constraint(equalTo: expenses.bottomAnchor, constant: -10),
+            income.leftAnchor.constraint(equalTo: expenses.leftAnchor),
+            income.widthAnchor.constraint(equalTo: expenses.widthAnchor),
+            income.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
     
     func setupTrends() {
-        view.addSubview(trends)
-        
         trends.setTitle("Your expenses have grown up 87% since last week.", for: .normal)
         trends.titleLabel?.numberOfLines = 2
         trends.configuration?.titleLineBreakMode = .byTruncatingTail
+        trends.setTitleColor(UIColor.label, for: .normal)
         trends.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
         trends.titleLabel?.minimumScaleFactor = 0.5
         
-        trends.layer.cornerRadius = 25.0
-        trends.layer.borderColor = UIColor.black.cgColor
-        trends.layer.borderWidth = 1.5
         // TODO: de facut scaling automat in functie de cate trend-uri noi sunt
         
         
-        trends.backgroundColor = UIColor(red: 0.86, green: 0.68, blue: 0.42, alpha: 1.0)
         trends.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            trends.topAnchor.constraint(equalTo: income.bottomAnchor, constant: 10.0),
+            trends.topAnchor.constraint(equalTo: income.bottomAnchor),
             trends.widthAnchor.constraint(equalTo: remainingBudget.widthAnchor),
-            trends.heightAnchor.constraint(equalTo: remainingBudget.heightAnchor),
-            trends.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+            trends.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            trends.heightAnchor.constraint(equalToConstant: 200),
         ])
     }
     
     func setupLastTransactions() {
-        view.addSubview(lastTransactions)
-        
         lastTransactions.text = "Last 5 transactions:"
-        lastTransactions.font = UIFont.boldSystemFont(ofSize: 20.0)
+        lastTransactions.font = UIFont.boldSystemFont(ofSize: 24.0)
         lastTransactions.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            lastTransactions.topAnchor.constraint(equalTo: trends.bottomAnchor, constant: 20.0),
-            lastTransactions.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.90),
-            lastTransactions.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20.0)
+            lastTransactions.topAnchor.constraint(equalTo: trends.bottomAnchor),
+            lastTransactions.widthAnchor.constraint(equalTo: remainingBudget.widthAnchor),
+            lastTransactions.leftAnchor.constraint(equalTo: remainingBudget.leftAnchor),
+            lastTransactions.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         setupTransactionsTable()
     }
     
     func setupTransactionsTable() {
-        view.addSubview(transactionsTable)
-        transactionsTable.delegate = self
-        transactionsTable.dataSource = self
-        transactionsTable.rowHeight = 50
-        transactionsTable.translatesAutoresizingMaskIntoConstraints = false
-        transactionsTable.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.transactionIdentifier)
-        
         NSLayoutConstraint.activate([
-            transactionsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
-            transactionsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
-            transactionsTable.topAnchor.constraint(equalTo: lastTransactions.bottomAnchor, constant: 20.0),
-            transactionsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            transactionsTable.topAnchor.constraint(equalTo: lastTransactions.bottomAnchor),
+            transactionsTable.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            transactionsTable.heightAnchor.constraint(equalToConstant: CGFloat(transactionsTable.numberOfRows(inSection: 0)) * transactionsTable.rowHeight),
+            transactionsTable.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        
+        transactionsTable.didSelectItemHandler = { selectedRow in
+            let transactionDetailsViewController = TransactionDetailsController()
+            self.navigationController?.pushViewController(transactionDetailsViewController, animated: true)
+        }
     }
     
     func setupNavButtons() {
@@ -209,14 +232,14 @@ class MainMenuController: UIViewController {
         let alertController = UIAlertController(title: "Are you sure you want to exit?",
                                                 message: "",
                                                 preferredStyle: .alert)
-        let noAction = UIAlertAction(title: "No", style: .destructive)
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
+        let noAction = UIAlertAction(title: "No", style: .default)
+        let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
             exit(0)
         }
         
         alertController.addAction(noAction)
         alertController.addAction(yesAction)
-        alertController.preferredAction = yesAction
+        alertController.preferredAction = noAction
         present(alertController, animated: true)
     }
     
@@ -226,39 +249,35 @@ class MainMenuController: UIViewController {
         navigationController?.pushViewController(settingsController, animated: true)
     }
     
-    @objc func goToRemainingBudgetScreen() {
-        let nextScreen = AddInvoiceController()
-        nextScreen.title = "Add Invoice"
-        navigationController?.pushViewController(nextScreen, animated: true)
-    }
-
-}
-
-extension MainMenuController : UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO: de implementat celulele tabelului bazate pe tranzactii
-        // TODO: de implementat ViewController pentru celule
-        if let transactionCell = transactionsTable.dequeueReusableCell(withIdentifier: TransactionViewCell.transactionIdentifier, for: indexPath) as? TransactionViewCell {
-            #if DEBUG
-                transactionCell.self.layer.borderWidth = 2
-                transactionCell.self.layer.borderColor = UIColor.red.cgColor
-            #endif
-            
-            return transactionCell
-        } else {
-            return UITableViewCell()
-        }
+    @objc func toggleLabels() {
+        hiddenLabels.toggle()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+            self.expenses.alpha = self.hiddenLabels ? 0.0 : 1.0
+            self.income.alpha = self.hiddenLabels ? 0.0 : 1.0
+            self.income.frame.origin.y += self.hiddenLabels ? -40 : 40
+            self.expenses.frame.origin.y += self.hiddenLabels ? -40 : 40
+        })
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15;
-    }
-    // TODO: de implementat
-}
-
-extension MainMenuController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let transactionDetailsViewController = TransactionDetailsController()
-        navigationController?.pushViewController(transactionDetailsViewController, animated: true)
+    
+    func setupDevBorders() {
+        remainingBudget.layer.borderWidth = 2
+        remainingBudget.layer.borderColor = UIColor.secondaryLabel.cgColor
+        
+        expenses.layer.borderColor = UIColor.secondaryLabel.cgColor
+        expenses.layer.borderWidth = 2
+        
+        income.layer.borderColor = UIColor.secondaryLabel.cgColor
+        income.layer.borderWidth = 2
+        
+        trends.layer.borderColor = UIColor.secondaryLabel.cgColor
+        trends.layer.borderWidth = 2
+        
+        lastTransactions.layer.borderColor = UIColor.secondaryLabel.cgColor
+        lastTransactions.layer.borderWidth = 2
+        
+        transactionsTable.layer.borderColor = UIColor.secondaryLabel.cgColor
+        transactionsTable.layer.borderWidth = 2
     }
 }
