@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class TabBarController: UITabBarController {
-
+    let context = LAContext()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -32,7 +34,12 @@ class TabBarController: UITabBarController {
         navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         navController.navigationBar.prefersLargeTitles = true
-
+        
         return navController
+    }
+    
+    // For FaceID failed authentications
+    func switchToMainMenuTab() {
+        self.selectedIndex = 0
     }
 }
