@@ -23,7 +23,7 @@ class MainMenuController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        transactionsTable.rowsToReturn = 5;
+        transactionsTable.rowsToReturn = 10;
 
         setupScrollingScreen()
         setupElementStyling()
@@ -230,7 +230,7 @@ class MainMenuController: UIViewController {
     
     @objc func leftBarButtonItemTapped() {
         let alertController = UIAlertController(title: "Are you sure you want to exit?",
-                                                message: "",
+                                                message: "This action will close the application.\nYou will lose all active filters and the new invoice if you have any.",
                                                 preferredStyle: .alert)
         let noAction = UIAlertAction(title: "No", style: .default)
         let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in

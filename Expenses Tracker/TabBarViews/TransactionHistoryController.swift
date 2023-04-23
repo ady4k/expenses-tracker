@@ -17,7 +17,8 @@ class TransactionHistoryController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Transactions History"
+        self.title = "Transactions"
+        self.navigationItem.title = "Transactions History"
         
         setupBlurView()
         transactionsTable.rowsToReturn = 50;
@@ -65,12 +66,12 @@ class TransactionHistoryController: UIViewController {
     }
     
     func setupNavButtons() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset",
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset Filters",
                                                            style: .done,
                                                            target: self,
                                                            action: #selector(TransactionHistoryController.leftBarButtonItemTapped))
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filters",
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply Filters",
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(TransactionHistoryController.rightBarButtonItemTapped))
@@ -78,7 +79,7 @@ class TransactionHistoryController: UIViewController {
     
     @objc func leftBarButtonItemTapped() {
         let alertController = UIAlertController(title: "Reset table filters?",
-                                                message: "",
+                                                message: "This action will remove all the filters that have been applied.\nThis action cannot be undone.",
                                                 preferredStyle: .alert)
         let noAction = UIAlertAction(title: "No", style: .default)
         let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
