@@ -11,6 +11,8 @@ class TemplateController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Templates"
+        
         view.backgroundColor = .systemCyan
     }
 }
