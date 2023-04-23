@@ -13,20 +13,22 @@ struct TransactionsResponse: Decodable {
 
 struct Transaction: Decodable {
     let id: Int
-    let type: String
     let date: Date
-    let seller: String
+    let type: String
+    let title: String
     let category: String
+    let trader: String
     let amount: Double
     let description: String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
-        case type = "transactionType"
-        case date = "transactionDate"
-        case seller = "seller"
+        case date = "date"
+        case type = "type"
+        case title = "title"
         case category = "category"
+        case trader = "trader"
         case amount = "amount"
-        case description = "notes"
+        case description = "description"
     }
 }

@@ -13,6 +13,7 @@ class TransactionDetailsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Transaction #\(transactionId)"
+        view.backgroundColor = .systemBackground
         
         let transactionDate = UILabel()
         view.addSubview(transactionDate)
@@ -36,21 +37,26 @@ class TransactionDetailsController: UIViewController {
         addConstraints(for: detailsLabel, to: transactionAmount, bottomConstant: 40.0)
         
         let transactionTitle = UILabel()
-        styleLabel(transactionTitle, "Title: Cumparaturi Mega", 16.0)
+        styleLabel(transactionTitle, "Title: Cumparaturi Mega", 18.0)
         addConstraints(for: transactionTitle, to: detailsLabel)
         
         let transactionCategory = UILabel()
         styleLabel(transactionCategory, "Category: Food", 16.0)
         addConstraints(for: transactionCategory, to: transactionTitle)
         
-        let transactionSeller = UILabel()
-        styleLabel(transactionSeller, "Mega Image S.R.L.", 16.0)
-        addConstraints(for: transactionSeller, to: transactionCategory)
+        let transactionTrader = UILabel()
+        styleLabel(transactionTrader, "Trader: Mega Image S.R.L.", 16.0)
+        addConstraints(for: transactionTrader, to: transactionCategory)
+        
+        let transactionDescription = UILabel()
+        styleLabel(transactionDescription, "\nDescription:\nBuy eggs, milk, other diary products. Purchased a Milka chocolate and three Twix, one white bread.", 16.0)
+        addConstraints(for: transactionDescription, to: transactionTrader)
     }
     
     func styleLabel(_ label: UILabel, _ text: String, _ fontSize: CGFloat) {
         label.font = UIFont.systemFont(ofSize: fontSize)
         label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 0
         label.text = text
         #if DEBUG
         label.layer.borderWidth = 2
