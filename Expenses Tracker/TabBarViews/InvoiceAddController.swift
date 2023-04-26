@@ -91,20 +91,29 @@ class InvoiceAddController: UIViewController, UITextFieldDelegate {
         transactionDescription.font = UIFont.systemFont(ofSize: 16.0)
         transactionDescription.layer.borderWidth = 1
         transactionDescription.layer.cornerRadius = 5
-        transactionDescription.layer.borderColor = UIColor.secondaryLabel.cgColor
+        transactionDescription.layer.borderColor = UIColor.lightGray.cgColor
         
         addGeneralConstraints(for: submitButton, to: transactionDescription, topConstant: 40)
         submitButton.setTitle("Submit Invoice", for: .normal)
         submitButton.backgroundColor = .quaternaryLabel
         submitButton.setTitleColor(.label, for: .normal)
         submitButton.layer.borderWidth = 1
-        submitButton.layer.borderColor = UIColor.secondaryLabel.cgColor
+        submitButton.layer.borderColor = UIColor.lightGray.cgColor
         submitButton.layer.cornerRadius = 5
     }
     
     private func styleFields(_ field: UITextField, _ text: String) {
+        let padding = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: field.frame.height))
+        
+        field.leftView = padding
+        field.rightView = padding
+        field.leftViewMode = .always
+        field.rightViewMode = .always
+        
         field.placeholder = text
-        field.borderStyle = .roundedRect
+        field.layer.cornerRadius = 10
+        field.layer.borderColor = UIColor.lightGray.cgColor
+        field.layer.borderWidth = 1
         field.delegate = self
     }
     

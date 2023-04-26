@@ -8,13 +8,7 @@
 import UIKit
 
 class BaseCustomTextField: UITextField {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+    // TODO: - to be implemented and changed wherever UITextField's are used
+    // - apply basic styling and custom padding to the fields
+    // - reuse the code as custom text fields
 }

@@ -28,7 +28,7 @@ class TransactionTypeSwitch: UIControl {
     private func setupUI() {
         print("called setupUI")
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.secondaryLabel.cgColor
+        self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.cornerRadius = 5
         self.clipsToBounds = true
         
