@@ -8,6 +8,7 @@
 import UIKit
 import LocalAuthentication
 
+// TODO: de implementat conexiunea cu API, reutilizabil -> folosit si in MainMenu, si aici
 class TransactionHistoryController: UIViewController {
     let transactionsTable = TransactionsTableView()
     var appliedFilters: [String] = []
@@ -75,6 +76,9 @@ class TransactionHistoryController: UIViewController {
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(TransactionHistoryController.rightBarButtonItemTapped))
+        // TODO: de implementat filtrele, ViewController nou
+        // - Aplicate si Resetare filtre
+        // - Request specific pentru obtinere date filtrate, alternativ doar filtram tabelul si luam GetAllTransactions
     }
     
     @objc func leftBarButtonItemTapped() {
@@ -97,6 +101,8 @@ class TransactionHistoryController: UIViewController {
         // TODO: Table requests and filtering logic
     }
     
+    // TODO: daca autentificarea cu FaceID nu este activata, nu se va apela functia si nici nu va aparea blurul
+    // TODO: de conectat cu UserDefaults, pentru toggle la autentificare
     func authenticate() {
         let context = LAContext()
         var error: NSError?

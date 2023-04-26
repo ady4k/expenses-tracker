@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// TODO: de implementat cu API-ul
 class TransactionDetailsController: UIViewController {
     var transactionId: Int = 123
     

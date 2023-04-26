@@ -7,6 +7,8 @@
 
 import UIKit
 
+// TODO: de folosit datele dinamice pentru fiecare tranzactie
+// TODO: refactorizare, refolosire cod constraints, eventual stilizare pentru UILabel()
 class TransactionViewCell: UITableViewCell {
     static let transactionIdentifier = "identifier"
     var isNegative: Bool = true

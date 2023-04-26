@@ -7,6 +7,7 @@
 
 import UIKit
 
+// TODO: - Some cleaning, refactoring into reusable code
 class MainMenuController: UIViewController {
     let scrollView = UIScrollView()
     let stackView = UIStackView()
@@ -175,7 +176,7 @@ class MainMenuController: UIViewController {
         trends.titleLabel?.minimumScaleFactor = 0.5
         
         // TODO: de facut scaling automat in functie de cate trend-uri noi sunt
-        
+        // TODO: de implementat sistemul de trends
         
         trends.translatesAutoresizingMaskIntoConstraints = false
         
@@ -192,6 +193,7 @@ class MainMenuController: UIViewController {
         lastTransactions.font = UIFont.boldSystemFont(ofSize: 24.0)
         lastTransactions.translatesAutoresizingMaskIntoConstraints = false
         
+        // TODO: de convertit la URLRequests, de implementat sistemul care ia UserDefaults pt numarul de rezultate
         NSLayoutConstraint.activate([
             lastTransactions.topAnchor.constraint(equalTo: trends.bottomAnchor),
             lastTransactions.widthAnchor.constraint(equalTo: remainingBudget.widthAnchor),

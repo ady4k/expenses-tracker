@@ -6,6 +6,7 @@
 //
 
 import UIKit
+// TODO: de conectat la API, de facut POST cu JSON-ul intreg
 
 class InvoiceAddController: UIViewController, UITextFieldDelegate {
     let typeSwitch = TransactionTypeSwitch()
@@ -178,11 +179,11 @@ class InvoiceAddController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func rightBarButtonItemTapped() {
-        // TODO: Use template
+        // TODO: de implementat sistemul care foloseste un sablon
     }
     
     private func resetFields() {
-        
+        // TODO: de implementat sistemul care curata toate campurile
     }
 }
 
