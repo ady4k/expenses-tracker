@@ -14,6 +14,7 @@
 		AF4FF9D129EC4D3D00B9B85C /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4FF9D029EC4D3D00B9B85C /* UserController.swift */; };
 		AF4FF9D329EC51BB00B9B85C /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4FF9D229EC51BB00B9B85C /* SettingsController.swift */; };
 		AF4FF9D529EC5C0500B9B85C /* TransactionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4FF9D429EC5C0500B9B85C /* TransactionViewCell.swift */; };
+		AF59B0092A02C558002B0277 /* ApiRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF59B0082A02C558002B0277 /* ApiRequests.swift */; };
 		AF6CD63F29F95FEF0080E55B /* NumericOnlyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6CD63E29F95FEF0080E55B /* NumericOnlyTextField.swift */; };
 		AF6CD64129F965FA0080E55B /* BaseCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6CD64029F965FA0080E55B /* BaseCustomTextField.swift */; };
 		AF7CC93C29F51F7200B49E32 /* TransactionTypeSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7CC93B29F51F7200B49E32 /* TransactionTypeSwitch.swift */; };
@@ -35,6 +36,7 @@
 		AF4FF9D029EC4D3D00B9B85C /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		AF4FF9D229EC51BB00B9B85C /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		AF4FF9D429EC5C0500B9B85C /* TransactionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewCell.swift; sourceTree = "<group>"; };
+		AF59B0082A02C558002B0277 /* ApiRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequests.swift; sourceTree = "<group>"; };
 		AF6CD63E29F95FEF0080E55B /* NumericOnlyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericOnlyTextField.swift; sourceTree = "<group>"; };
 		AF6CD64029F965FA0080E55B /* BaseCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCustomTextField.swift; sourceTree = "<group>"; };
 		AF7CC93B29F51F7200B49E32 /* TransactionTypeSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTypeSwitch.swift; sourceTree = "<group>"; };
@@ -61,6 +63,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF59B0052A02BD49002B0277 /* RequestsConnection */ = {
+			isa = PBXGroup;
+			children = (
+				AF59B0082A02C558002B0277 /* ApiRequests.swift */,
+			);
+			path = RequestsConnection;
+			sourceTree = "<group>";
+		};
 		AF7CC93A29F51EF700B49E32 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +110,7 @@
 				AFC730BE29F3CA2E0097E0BC /* TabBarViews */,
 				AFC730BC29F3C9E90097E0BC /* Transaction */,
 				AF7CC93A29F51EF700B49E32 /* CustomViews */,
+				AF59B0052A02BD49002B0277 /* RequestsConnection */,
 			);
 			path = "Expenses Tracker";
 			sourceTree = "<group>";
@@ -199,6 +210,7 @@
 			files = (
 				AF6CD63F29F95FEF0080E55B /* NumericOnlyTextField.swift in Sources */,
 				AF7CC93C29F51F7200B49E32 /* TransactionTypeSwitch.swift in Sources */,
+				AF59B0092A02C558002B0277 /* ApiRequests.swift in Sources */,
 				AF4FF9D129EC4D3D00B9B85C /* UserController.swift in Sources */,
 				AF6CD64129F965FA0080E55B /* BaseCustomTextField.swift in Sources */,
 				AF82682329E9A1DD000A5C34 /* MainMenuController.swift in Sources */,
