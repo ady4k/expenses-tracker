@@ -214,6 +214,9 @@ class MainMenuController: UIViewController {
         
         transactionsTable.didSelectItemHandler = { selectedRow in
             let transactionDetailsViewController = TransactionDetailsController()
+            if (self.transactionsTable.transactionList.count > 0) {
+                transactionDetailsViewController.transaction = self.transactionsTable.transactionList[selectedRow]
+            }
             self.navigationController?.pushViewController(transactionDetailsViewController, animated: true)
         }
     }

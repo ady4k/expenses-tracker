@@ -61,6 +61,9 @@ class TransactionHistoryController: UIViewController {
         
         transactionsTable.didSelectItemHandler = { selectedRow in
             let transactionDetailViewController = TransactionDetailsController()
+            if (self.transactionsTable.transactionList.count > 0) {
+                transactionDetailViewController.transaction = self.transactionsTable.transactionList[selectedRow]
+            }
             self.navigationController?.pushViewController(transactionDetailViewController, animated: true)
         }
         transactionsTable.isScrollEnabled = true

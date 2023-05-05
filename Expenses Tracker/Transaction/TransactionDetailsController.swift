@@ -6,16 +6,24 @@
 //
 
 import UIKit
-// TODO: de implementat cu API-ul
+
 class TransactionDetailsController: UIViewController {
-    var transactionId: Int = 123
+    var transaction: Transaction?
     
+    let transactionDate = UILabel()
+    let transactionType = UILabel()
+    let transactionAmount = UILabel()
+    let detailsLabel = UILabel()
+    let transactionTitle = UILabel()
+    let transactionCategory = UILabel()
+    let transactionTrader = UILabel()
+    let transactionDescription = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Transaction #\(transactionId)"
+        title = "Transaction #1234"
         view.backgroundColor = .systemBackground
         
-        let transactionDate = UILabel()
         view.addSubview(transactionDate)
         transactionDate.translatesAutoresizingMaskIntoConstraints = false
         transactionDate.text = "12/03/2022 19:05:44"
@@ -24,33 +32,30 @@ class TransactionDetailsController: UIViewController {
             transactionDate.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 22.0)
         ])
         
-        let transactionType = UILabel()
         styleLabel(transactionType, "Expense", 42.0)
         addConstraints(for: transactionType, to: transactionDate, bottomConstant: 25.0, leftConstant: -10.0)
         
-        let transactionAmount = UILabel()
         styleLabel(transactionAmount, "- €12,345,678.90", 34.0)
         addConstraints(for: transactionAmount, to: transactionType)
         
-        let detailsLabel = UILabel()
         styleLabel(detailsLabel, "Details:", 20.0)
         addConstraints(for: detailsLabel, to: transactionAmount, bottomConstant: 40.0)
         
-        let transactionTitle = UILabel()
         styleLabel(transactionTitle, "Title: Cumparaturi Mega", 18.0)
         addConstraints(for: transactionTitle, to: detailsLabel)
         
-        let transactionCategory = UILabel()
         styleLabel(transactionCategory, "Category: Food", 16.0)
         addConstraints(for: transactionCategory, to: transactionTitle)
         
-        let transactionTrader = UILabel()
         styleLabel(transactionTrader, "Trader: Mega Image S.R.L.", 16.0)
         addConstraints(for: transactionTrader, to: transactionCategory)
         
-        let transactionDescription = UILabel()
         styleLabel(transactionDescription, "\nDescription:\nBuy eggs, milk, other diary products. Purchased a Milka chocolate and three Twix, one white bread.", 16.0)
         addConstraints(for: transactionDescription, to: transactionTrader)
+        
+        if let trans = transaction {
+            loadTransactionDetails(trans)
+        }
     }
     
     func styleLabel(_ label: UILabel, _ text: String, _ fontSize: CGFloat) {
@@ -73,5 +78,50 @@ class TransactionDetailsController: UIViewController {
             subview.leftAnchor.constraint(equalTo: superview.leftAnchor, constant: leftConstant),
             subview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
         ])
+    }
+    
+    func loadTransactionDetails(_ trans: Transaction) {
+        title = "Transaction #\(String(trans.id))"
+        transactionDate.text = formatDate(trans.date)
+        transactionType.text = "\(trans.type.capitalized)"
+        transactionAmount.text = formatCurrency(trans.amount, "EUR")
+        transactionTitle.text = "Title: \(trans.title)"
+        transactionCategory.text = "Category: \(trans.category)"
+        transactionTrader.text = "Trader: \(trans.trader)"
+        transactionDescription.text = "\nDescription\n\(trans.description)"
+        
+        if (trans.type == "income") {
+            setTextColor(transactionType, isNegative: false)
+            setTextColor(transactionAmount, isNegative: false)
+        } else {
+            setTextColor(transactionType, isNegative: true)
+            setTextColor(transactionAmount, isNegative: true)
+        }
+    }
+    
+    func formatDate(_ date: String) -> String {
+        let dateToBeFormatted = date + "Z"
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        guard let date = dateFormatter.date(from: dateToBeFormatted) else {
+            fatalError("Unable to parse date")
+        }
+        
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+        let formattedDate = dateFormatter.string(from: date)
+        return formattedDate
+    }
+    
+    func formatCurrency(_ amount: Double, _ currencyCode: String) -> String {
+        return amount.formatted(.currency(code: currencyCode))
+    }
+    
+    func setTextColor(_ label: UILabel, isNegative: Bool) {
+        if (isNegative == false) {
+            label.textColor = UIColor(red: 0, green: 0.55, blue: 0, alpha: 1.0)
+        } else {
+            label.textColor = UIColor(red: 0.67, green: 0, blue: 0, alpha: 1.0)
+        }
     }
 }
