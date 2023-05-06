@@ -6,11 +6,13 @@
 //
 
 import UIKit
+let userDefaults = UserDefaults.standard
+let numberOfTransactions = userDefaults.integer(forKey: Constants.numberOfTransactionsOnMainViewDefaultsKey)
 
 class SettingsController: UIViewController, UITextFieldDelegate {
     let transNumberLabel = UILabel()
     let transNumberInput = UITextField()
-    var transNumber: Int = 5
+    var transNumber: Int = numberOfTransactions
     
     let authorizeWithFaceIdLabel = UILabel()
     let authorizeWithFaceIdSwitch = UISwitch()
@@ -130,6 +132,8 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         // TODO: - Logic for the button to be implemented
         // - Disabled when no changes are made
         // - Enabled and apply when the changed are made
+        userDefaults.set(transNumberInput.text, forKey: Constants.numberOfTransactionsOnMainViewDefaultsKey)
+        exit(0)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

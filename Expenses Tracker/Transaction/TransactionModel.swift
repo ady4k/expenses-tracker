@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Transaction: Decodable {
+struct Transaction: Codable {
     let id: Int
     let date: String
     let type: String

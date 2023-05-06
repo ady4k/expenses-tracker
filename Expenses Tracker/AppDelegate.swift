@@ -13,7 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let standardUserDefaults = UserDefaults.standard
+        let numberOfTransactions = standardUserDefaults.object(forKey: Constants.numberOfTransactionsOnMainViewDefaultsKey)
+        if (numberOfTransactions == nil) {
+            standardUserDefaults.set(5, forKey: Constants.numberOfTransactionsOnMainViewDefaultsKey)
+        }
+        
         return true
     }
 

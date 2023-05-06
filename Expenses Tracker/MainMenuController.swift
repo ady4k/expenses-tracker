@@ -7,16 +7,22 @@
 
 import UIKit
 
+let numberOfTransactionsToReturn = UserDefaults.standard.integer(forKey: Constants.numberOfTransactionsOnMainViewDefaultsKey)
 // TODO: - Some cleaning, refactoring into reusable code
 class MainMenuController: UIViewController {
     let scrollView = UIScrollView()
     let stackView = UIStackView()
     
     let remainingBudget = UIButton()
+    var budgetStr: String = ""
     var hiddenLabels = false
     
     let expenses = UIButton()
+    var expensesStr: String = ""
+    
     let income = UIButton()
+    var incomesStr: String = ""
+    
     let trends = UIButton()
     
     let lastTransactions = UILabel()
@@ -24,7 +30,7 @@ class MainMenuController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        transactionsTable.rowsToReturn = 10;
+        transactionsTable.rowsToReturn = numberOfTransactionsToReturn;
 
         setupScrollingScreen()
         setupElementStyling()
@@ -39,8 +45,10 @@ class MainMenuController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         transactionsTable.reloadData()
+        lastTransactions.text = "Last \(numberOfTransactionsToReturn) transactions:"
+
     }
-    
+
     func setupScrollingScreen() {
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
@@ -189,7 +197,7 @@ class MainMenuController: UIViewController {
     }
     
     func setupLastTransactions() {
-        lastTransactions.text = "Last 5 transactions:"
+        lastTransactions.text = "Last \(numberOfTransactionsToReturn) transactions:"
         lastTransactions.font = UIFont.boldSystemFont(ofSize: 24.0)
         lastTransactions.translatesAutoresizingMaskIntoConstraints = false
         
@@ -219,6 +227,39 @@ class MainMenuController: UIViewController {
             }
             self.navigationController?.pushViewController(transactionDetailsViewController, animated: true)
         }
+        
+        calculateBudgets()
+    }
+    
+    func calculateBudgets() {
+        var expensesSum: Double = 0
+        var incomesSum: Double = 0
+        let transactionsList = transactionsTable.transactionList
+        for transaction in transactionsList {
+            if (transaction.type == "income") {
+                incomesSum = incomesSum + transaction.amount
+            } else {
+                expensesSum = expensesSum + transaction.amount
+            }
+        }
+        let budgetSum: Double = max((incomesSum - expensesSum), 0)
+        
+        incomesStr = "• Income: " + formatCurrency(incomesSum, "EUR")
+        expensesStr = "• Expenses: " + formatCurrency(expensesSum, "EUR")
+        budgetStr = "Budget: " + String(budgetSum == 0 ? "None" : formatCurrency(budgetSum, "EUR"))
+        
+        loadBudgetingStrings()
+    }
+    
+    
+    func formatCurrency(_ amount: Double, _ currencyCode: String) -> String {
+        return amount.formatted(.currency(code: currencyCode))
+    }
+    
+    func loadBudgetingStrings() {
+        remainingBudget.setTitle(budgetStr, for: .normal)
+        expenses.setTitle(expensesStr, for: .normal)
+        income.setTitle(incomesStr, for: .normal)
     }
     
     func setupNavButtons() {
