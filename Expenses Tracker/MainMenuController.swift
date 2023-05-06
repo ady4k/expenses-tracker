@@ -45,6 +45,7 @@ class MainMenuController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         transactionsTable.reloadData()
+        reloadTransactions()
         lastTransactions.text = "Last \(numberOfTransactionsToReturn) transactions:"
 
     }
@@ -260,6 +261,11 @@ class MainMenuController: UIViewController {
         remainingBudget.setTitle(budgetStr, for: .normal)
         expenses.setTitle(expensesStr, for: .normal)
         income.setTitle(incomesStr, for: .normal)
+    }
+    
+    func reloadTransactions() {
+        transactionsTable.loadTransactions()
+        calculateBudgets()
     }
     
     func setupNavButtons() {

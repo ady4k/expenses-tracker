@@ -71,26 +71,26 @@ class Transactions {
         guard let url = getURLForTransactions() else {
             return
         }
+        
         let jsonObject = try? JSONEncoder().encode(transaction)
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpBody = jsonObject
-        
+
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { responseData, urlResponse, error in
             if let error = error {
                 print("Request failed, error: \(error)")
                 return
             }
-            
+
             guard let httpUrlResponse = urlResponse as? HTTPURLResponse,
                   let data = responseData else {
                 print ("No data received or response is not a HTTP response")
-                let error = NSError(domain: "Invalid Response", code: 0, userInfo: nil)
                 return
             }
-            
+
             print("Response Code: \(httpUrlResponse.statusCode)")
             if let dataString = String(data: data, encoding: .utf8) {
                 print("Response data: \(dataString)")

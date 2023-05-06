@@ -9,6 +9,8 @@ import UIKit
 // TODO: de conectat la API, de facut POST cu JSON-ul intreg
 
 class InvoiceAddController: UIViewController, UITextFieldDelegate {
+    let transactionsRequests = Transactions()
+
     let typeSwitch = TransactionTypeSwitch()
     
     let amount = UITextField()
@@ -101,6 +103,8 @@ class InvoiceAddController: UIViewController, UITextFieldDelegate {
         submitButton.layer.borderWidth = 1
         submitButton.layer.borderColor = UIColor.lightGray.cgColor
         submitButton.layer.cornerRadius = 5
+        submitButton.addTarget(self, action: #selector(addInvoice), for: .touchUpInside)
+
     }
     
     private func styleFields(_ field: UITextField, _ text: String) {
@@ -142,7 +146,7 @@ class InvoiceAddController: UIViewController, UITextFieldDelegate {
         if (textField == amountDecimal) {
             return changeCharactersIn(textField, range, replacementString: string, 2, CharacterSet.decimalDigits)
         }
-        return changeCharactersIn(textField, range, replacementString: string, 32, CharacterSet.alphanumerics)
+        return changeCharactersIn(textField, range, replacementString: string, 32, CharacterSet.alphanumerics.union(.whitespaces))
     }
     
     private func changeCharactersIn(_ textField: UITextField, _ range: NSRange, replacementString string: String, _ limit: Int, _ allowedCharacters: CharacterSet) -> Bool {
@@ -169,7 +173,7 @@ class InvoiceAddController: UIViewController, UITextFieldDelegate {
                                                 preferredStyle: .alert)
         let noAction = UIAlertAction(title: "No", style: .default)
         let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
-            //self.resetFields()
+            self.resetFields()
         }
         
         alertController.addAction(noAction)
@@ -184,6 +188,45 @@ class InvoiceAddController: UIViewController, UITextFieldDelegate {
     
     private func resetFields() {
         // TODO: de implementat sistemul care curata toate campurile
+    }
+    
+    @objc private func addInvoice() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let dateString: String = dateFormatter.string(from: date.date)
+        
+        var amountWholeDbl: Double = 0
+        if let amountWhole = amount.text {
+            if let amountWholeTemp: Double = Double(amountWhole) {
+                amountWholeDbl = amountWholeTemp
+            }
+        } else {
+            return
+        }
+        
+        var amountDecimalDbl: Double = 0
+        if let amountDecimal = (amountDecimal.text) {
+            if let amountDecimalTemp: Double = Double(amountDecimal) {
+                amountDecimalDbl = amountDecimalTemp
+            }
+        } else {
+            return
+        }
+        
+        
+        let transaction = Transaction(
+            id: 1,
+            date: dateString,
+            type: typeSwitch.selectedSide == 1 ? "income" : "expense",
+            title: transactionTitle.text! == "" ? "No Title" : transactionTitle.text!,
+            category: category.text! == "" ? "No Category" : category.text!,
+            trader: trader.text! == "" ? "No Trader" : trader.text!,
+            amount: (amountWholeDbl * 100 + amountDecimalDbl) / 100,
+            description: transactionDescription.text == "" ? "No Description" : transactionDescription.text
+        )
+        
+        transactionsRequests.postTransaction(transaction)
+        
     }
 }
 

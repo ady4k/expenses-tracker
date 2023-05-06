@@ -35,6 +35,7 @@ class TransactionHistoryController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         transactionsTable.reloadData()
+        transactionsTable.loadTransactions()
         
         if (shouldAuthenticate == true) {
             authenticate()
