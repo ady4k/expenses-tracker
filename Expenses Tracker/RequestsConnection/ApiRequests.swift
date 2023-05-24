@@ -26,7 +26,7 @@
 import Foundation
 
 class Transactions {
-    let mainUrlString = "http://192.168.1.104:5000/api/ios"
+    let mainUrlString = "hiddenUrl"
     
     public func getURLForTransactions(_ additionalQueryParams: String = "") -> URL? {
         let urlString = mainUrlString + additionalQueryParams
